@@ -1,13 +1,28 @@
-<script>
-  import { Meta, Story } from '../src/index';
+<script lang="ts" context="module">
+  import type { Meta } from '@storybook/svelte';
 
   import ArgsTableView from './ArgsTableView.svelte';
-  // eslint-disable-next-line
-  import srcArgsTableView from './ArgsTableView.svelte?raw';
+
+  export const meta = {
+    title: 'Args Table',
+    component: ArgsTableView,
+  } satisfies Meta<ArgsTableView>;
 </script>
 
-<Meta title="Args Table" component={ArgsTableView}/>
+<script>
+  // eslint-disable-next-line
+  import srcArgsTableView from './ArgsTableView.svelte?raw';
 
-<Story name="ArgsTable" let:args source={srcArgsTableView}>
-  <ArgsTableView {...args}/>
+  import { Story } from '../src/index.js';
+</script>
+
+<Story name="ArgsTable" source={srcArgsTableView} args={{ required: true, value: "test" }}>
+  {#snippet children(args)}
+      <ArgsTableView {...args}>
+        {#snippet actions({ required, value })}
+        <!-- FIXME: I don't understand what resulets were tried to be achieved there -->
+        {/snippet}
+      </ArgsTableView>
+  {/snippet}
 </Story>
+

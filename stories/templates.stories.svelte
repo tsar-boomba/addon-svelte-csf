@@ -1,16 +1,29 @@
-<script>
-    import { Meta, Story, Template } from '../src/index.js';
+<script context="module">
+  export const meta = {
+    title: 'Templates',
+  };
 </script>
 
-<Meta title="Templates"/>
+<script>
+  import { Template, Story } from '../src/index';
+</script>
 
-<Template id="myTemplate" let:text>
+<Template id="myTemplate" args={{ text: 'story1' }}>
+  {#snippet children({ text })}
     <div>Template 1 {text}</div>
+  {/snippet}
 </Template>
 
-<Template id="anotherTemplate" let:text>
+<Template id="anotherTemplate">
+  {#snippet children({ text })}
     <div>Template 2 {text}</div>
+  {/snippet}
 </Template>
 
-<Story id="s1" template="myTemplate" name="Story with myTemplate" args={{text:'story1'}}/>
-<Story id="s2" template="anotherTemplate" name="Story with anotherTemplate" args={{text:'story2'}}/>
+<Story id="s1" template="myTemplate" name="Story with myTemplate" args={{ text: 'story1' }} />
+<Story
+  id="s2"
+  template="anotherTemplate"
+  name="Story with anotherTemplate"
+  args={{ text: 'story2' }}
+/>

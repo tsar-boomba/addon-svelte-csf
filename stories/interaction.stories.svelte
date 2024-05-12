@@ -1,9 +1,19 @@
+<script lang="ts" context="module">
+  import type { Meta } from '@storybook/svelte';
+
+  import Counter from './Counter.svelte';
+
+  export const meta = {
+    title: 'Interactions',
+    component: Counter,
+  } satisfies Meta<Counter>;
+</script>
+
 <script>
-  import { Meta, Story } from '../src/index';
+  import { Story } from '../src/index';
   import { expect } from '@storybook/test';
   import { userEvent, within } from '@storybook/test';
   import { tick } from 'svelte';
-  import Counter from './Counter.svelte';
 
   async function play({ canvasElement }) {
     const canvas = within(canvasElement);
@@ -13,19 +23,16 @@
     expect(count.textContent).toEqual('You clicked 1 times');
   }
 
-  let i = 0;
+  let i = $state(0);
 </script>
 
-<Meta title="Interactions" component={Counter} />
-
-<Story name="Play" {play}>
+<Story {play}>
   <Counter />
 </Story>
 
 <Story
-  name="Play (capturing scope)"
+  name="Play capturing scope"
   play={async (storyContext) => {
-
     const { canvasElement } = storyContext;
     const canvas = within(canvasElement);
     const p = canvas.getByTestId('count');
